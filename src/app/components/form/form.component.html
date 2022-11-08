@@ -1,0 +1,75 @@
+<h1 *ngIf="!estudiante.id; else elseLabel">Registrar estudiante</h1>
+<ng-template #elseLabel>
+  <h1>Editar estudiante</h1>
+</ng-template>
+<div class="form-wrapper">
+  <div class="divider">
+    <form>
+      <p>
+        <mat-form-field appearance="outline" color="primary">
+          <mat-label>Nombres</mat-label>
+          <input
+            matInput
+            placeholder="Nombres"
+            name="first_name"
+            [(ngModel)]="estudiante.first_name"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" color="primary">
+          <mat-label>Apellidos</mat-label>
+          <input
+            matInput
+            placeholder="Apellidos"
+            name="last_name"
+            [(ngModel)]="estudiante.last_name"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" color="primary">
+          <mat-label>Documento de identidad</mat-label>
+          <input
+            matInput
+            placeholder="Documento de identidad"
+            name="document"
+            [(ngModel)]="estudiante.document"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" color="primary">
+          <mat-label>Número telefónico</mat-label>
+          <input
+            matInput
+            placeholder="Número telefónico"
+            name="phone_number"
+            [(ngModel)]="estudiante.phone_number"
+          />
+        </mat-form-field>
+      </p>
+    </form>
+  </div>
+  <div class="divider">
+    <h3>Vista previa:</h3>
+    <mat-card>
+      <mat-card-title
+        >{{ estudiante.first_name }} {{ estudiante.last_name }}</mat-card-title
+      >
+      <mat-card-subtitle>CC {{ estudiante.document }}</mat-card-subtitle>
+      <mat-card-content
+        >Teléfono: {{ estudiante.phone_number }}</mat-card-content
+      >
+    </mat-card>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div *ngIf="!estudiante.id; else elseBlock">
+    <button mat-raised-button (click)="create()">Registrar estudiante</button>
+  </div>
+  <ng-template #elseBlock>
+    <button mat-raised-button (click)="update()">Actualizar estudiante</button>
+  </ng-template>
+</div>

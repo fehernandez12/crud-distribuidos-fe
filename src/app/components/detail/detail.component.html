@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-title
+    >{{ estudiante.first_name }} {{ estudiante.last_name }}</mat-card-title
+  >
+  <mat-card-subtitle>CC {{ estudiante.document }}</mat-card-subtitle>
+  <mat-card-content>Teléfono: {{ estudiante.phone_number }}</mat-card-content>
+</mat-card>
+<hr />
+<button
+  mat-raised-button
+  color="primary"
+  [routerLink]="['/editar', estudiante.id]"
+>
+  Editar estudiante
+</button>
+<button
+  mat-raised-button
+  color="accent"
+  (click)="delete()"
+  class="delete-button"
+>
+  Eliminar estudiante
+</button>
