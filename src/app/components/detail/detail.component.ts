@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Estudiante } from 'src/app/models/estudiante';
 import { ApiService } from 'src/app/services/api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail',
@@ -13,7 +15,8 @@ export class DetailComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {
     this.estudiante = {
       first_name: '',
@@ -34,11 +37,17 @@ export class DetailComponent implements OnInit {
   }
 
   delete(): void {
-    this.apiService.delete(this.estudiante.id!).subscribe(() => {
-      alert(
-        `El estudiante ${this.estudiante.first_name} ${this.estudiante.last_name} ha sido eliminado`
-      );
-      this.router.navigate(['/']);
+    Swal.fire({
+      title: '¡Alerta!',
+      text: `Se eliminará el estudiante ${this.estudiante.first_name} ${this.estudiante.last_name}. Esta acción no se puede deshacer.`,
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.delete(this.estudiante.id!).subscribe(() => {
+          this._snackBar.open(`El estudiante ha sido eliminado.`, `OK`);
+          this.router.navigate(['/']);
+        });
+      }
     });
   }
 }

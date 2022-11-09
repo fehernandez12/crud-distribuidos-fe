@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Estudiante } from 'src/app/models/estudiante';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -14,7 +15,8 @@ export class FormComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {
     this.estudiante = {};
   }
@@ -35,8 +37,9 @@ export class FormComponent implements OnInit {
 
   create(): void {
     this.apiService.save(this.estudiante).subscribe(() => {
-      alert(
-        `Estudiante ${this.estudiante.first_name} ${this.estudiante.last_name} registrado`
+      this.openSnackBar(
+        `Estudiante ${this.estudiante.first_name} ${this.estudiante.last_name} registrado`,
+        'OK'
       );
       this.router.navigate(['/']);
     });
@@ -44,10 +47,15 @@ export class FormComponent implements OnInit {
 
   update(): void {
     this.apiService.update(this.estudiante).subscribe(() => {
-      alert(
-        `Estudiante ${this.estudiante.first_name} ${this.estudiante.last_name} actualizado`
+      this.openSnackBar(
+        `Estudiante ${this.estudiante.first_name} ${this.estudiante.last_name} actualizado`,
+        'OK'
       );
       this.router.navigate(['/']);
     });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
